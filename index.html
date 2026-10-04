@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lendverse | Real-world assets, alive in the metaverse</title>
+<meta name="description" content="Lendverse concept: tokenized real estate turned into 3D districts you can explore.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F2FF;--bg2:#E8E4FF;--ink:#17153B;--mute:#5B5880;--line:#CFC9F5;--acc:#6A4BFF;--acc2:#0FA37F;--sand:#C98A2B;--card:#FFFFFF;--on:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D0E2B;--bg2:#15174A;--ink:#EEEBFF;--mute:#A6A3D1;--line:#2B2D6B;--acc:#8B73FF;--acc2:#5CF2C0;--sand:#FFC875;--card:#171950;--on:#0D0E2B}}
+:root[data-theme="dark"]{--bg:#0D0E2B;--bg2:#15174A;--ink:#EEEBFF;--mute:#A6A3D1;--line:#2B2D6B;--acc:#8B73FF;--acc2:#5CF2C0;--sand:#FFC875;--card:#171950;--on:#0D0E2B}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 Manrope,system-ui,sans-serif}
+h1,h2,h3{font-family:Unbounded,system-ui,sans-serif;line-height:1.12;margin:0;letter-spacing:-.01em}
+a{color:inherit}
+.w{max-width:1120px;margin:0 auto;padding:0 22px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+.logo{font:700 20px Unbounded,sans-serif;text-decoration:none}
+.logo i{font-style:normal;color:var(--acc)}
+nav div{display:flex;gap:22px;align-items:center}
+nav a:not(.btn){text-decoration:none;color:var(--mute);font-size:15px}
+.btn{display:inline-block;background:var(--acc);color:#fff;padding:13px 24px;border-radius:999px;font-weight:700;text-decoration:none;font-size:15px}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.toast{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:var(--ink);color:var(--bg);padding:11px 22px;border-radius:999px;font:700 14px Manrope,system-ui,sans-serif;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+button.btn{font:700 15px Manrope,system-ui,sans-serif;cursor:pointer}
+a:focus-visible,.btn:focus-visible{outline:3px solid var(--acc2);outline-offset:3px}
+.hero{display:grid;grid-template-columns:1fr 1.15fr;gap:20px;align-items:center;padding:40px 0 70px}
+.hero h1{font-size:clamp(34px,5.2vw,60px)}
+.hero p{color:var(--mute);max-width:46ch;margin:22px 0 30px;font-size:18px}
+.hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+.world{width:100%;height:auto;overflow:visible}
+.float{animation:fl 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes fl{50%{transform:translateY(-10px)}}
+@media (prefers-reduced-motion:reduce){.float{animation:none}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--line);border-radius:20px;background:var(--card)}
+.stats div{padding:26px 28px}
+.stats div+div{border-left:1.5px solid var(--line)}
+.stats b{display:block;font:700 28px Unbounded,sans-serif;color:var(--acc)}
+.stats span{color:var(--mute);font-size:15px}
+section{padding:84px 0 0}
+.head{max-width:620px;margin-bottom:34px}
+.head h2{font-size:clamp(26px,3.6vw,38px)}
+.head p{color:var(--mute);margin:14px 0 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.parcel{background:var(--card);border:1.5px solid var(--line);border-radius:22px;overflow:hidden}
+.parcel svg{display:block;width:100%;height:auto;background:var(--bg2)}
+.parcel div{padding:20px 22px 24px}
+.parcel h3{font-size:18px}
+.parcel p{margin:8px 0 0;color:var(--mute);font-size:15px}
+.tag{display:inline-block;font-size:13px;font-weight:700;color:var(--acc2);border:1.5px solid currentColor;border-radius:999px;padding:2px 12px;margin-bottom:12px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:s}
+.steps div{padding:6px 28px 6px 0;position:relative}
+.steps div::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--acc);color:#fff;font:700 16px Unbounded,sans-serif;margin-bottom:16px}
+.steps h3{font-size:18px;margin-bottom:8px}
+.steps p{margin:0;color:var(--mute);font-size:15.5px}
+.why{display:grid;grid-template-columns:1fr 1fr;gap:34px 48px}
+.why h3{font-size:18px;margin-bottom:6px}
+.why p{margin:0;color:var(--mute)}
+.note{background:var(--bg2);border-radius:22px;padding:30px 32px;color:var(--mute);font-size:15px}
+.note b{color:var(--ink)}
+footer{padding:60px 0 50px;color:var(--mute);font-size:14px}
+footer .row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:1.5px solid var(--line);padding-top:26px}
+@media (max-width:820px){nav .btn{padding:10px 14px;font-size:13px!important}nav div{gap:8px}.hero,.grid,.steps,.why{grid-template-columns:1fr}.steps div{padding-bottom:22px}.stats{grid-template-columns:1fr}.stats div+div{border-left:0;border-top:1.5px solid var(--line)}nav div a:not(.btn){display:none}.hero{padding-top:20px}}
+</style>
+</head>
+<body>
+<div class="w">
+<nav><a class="logo" href="#">Lend<i>verse</i></a><div><a href="#distrik">Districts</a><a href="#cara">How it works</a><a href="#kenapa">Why</a><button class="btn alt copyca" type="button" data-ca="0x00" aria-label="Copy $LendVerse contract address">$LendVerse</button><a class="btn" href="lendverse.html">Open App</a></div></nav>
+
+<header class="hero">
+<div>
+<h1>Real estate, now a world you can walk through.</h1>
+<p>Lendverse turns real-world assets (RWA) into 3D districts. See the buildings, understand the project, then fund it from your wallet.</p>
+<div class="cta"><a class="btn" href="lendverse.html">Open App</a><button class="btn alt copyca" type="button" data-ca="0x00" aria-label="Copy $LendVerse contract address">$LendVerse</button><a class="btn alt" href="#cara">See how it works</a></div>
+</div>
+<svg class="world" id="world" viewBox="0 0 560 420" role="img" aria-label="Isometric city illustration with tokenized buildings"></svg>
+</header>
+
+<div class="stats">
+<div><b>Start small</b><span>Take a share of one parcel, no need to buy a whole building</span></div>
+<div><b>Transparent</b><span>Every parcel has a project page with open data</span></div>
+<div><b>From your wallet</b><span>Explore, fund, and track without switching apps</span></div>
+</div>
+
+<section id="distrik">
+<div class="head"><h2>The first three districts</h2><p>Sample parcels to illustrate the concept. Names and figures below are illustrative, not an offer.</p></div>
+<div class="grid" id="parcels"></div>
+</section>
+
+<section id="cara">
+<div class="head"><h2>From sign-up to owning a share</h2></div>
+<div class="steps">
+<div><h3>Connect your wallet</h3><p>Sign in and complete identity verification so you can take part.</p></div>
+<div><h3>Explore a district</h3><p>Walk through the 3D world, open a parcel, and read the project and developer details.</p></div>
+<div><h3>Fund and track</h3><p>Choose an amount, fund a parcel, then follow its progress on the city map.</p></div>
+</div>
+</section>
+
+<section id="kenapa">
+<div class="head"><h2>Why a metaverse for RWA?</h2></div>
+<div class="why">
+<div><h3>Assets you can see</h3><p>Property investing often feels abstract. In Lendverse, every parcel has a visible shape, location, and status.</p></div>
+<div><h3>Wider access</h3><p>Fractional ownership opens participation to small amounts.</p></div>
+<div><h3>A community inside the city</h3><p>Parcel holders can gather, discuss, and vote on project decisions.</p></div>
+<div><h3>Always-open data</h3><p>Documents, progress, and transaction history are in one place.</p></div>
+</div>
+</section>
+
+<section id="mulai">
+<div class="note"><b>Important note.</b> This page is a design concept for Lendverse. Project names, figures, and features are illustrative. A real investment product requires licensing and regulatory compliance in each jurisdiction, risk assessment, and legal review before launch. Any investment carries a risk of capital loss.
+<p style="margin:18px 0 0"><a class="btn" href="mailto:hello@lendverse.example">Join the waitlist</a></p></div>
+</section>
+
+<footer><div class="row"><span>© 2026 Lendverse.</span><span>Inspired by the structure of tokenized real estate sites.</span></div></footer>
+</div>
+
+<script>
+function box(x,y,w,d,h,c){const t=[[x,y-h],[x+w,y-h+w/2],[x+w-d,y-h+w/2+d/2],[x-d,y-h+d/2]];
+const P=a=>a.map(p=>p.join(',')).join(' ');
+const top=P([[x,y-h],[x+w,y-h+w/2],[x+w-d,y-h+w/2+d/2],[x-d,y-h+d/2]]);
+const L=P([[x-d,y-h+d/2],[x+w-d,y-h+w/2+d/2],[x+w-d,y+w/2+d/2],[x-d,y+d/2]]);
+const R=P([[x+w-d,y-h+w/2+d/2],[x+w,y-h+w/2],[x+w,y+w/2],[x+w-d,y+w/2+d/2]]);
+return `<polygon points="${L}" fill="${c}" opacity=".78"/><polygon points="${R}" fill="${c}" opacity=".55"/><polygon points="${top}" fill="${c}"/>`}
+const A='var(--acc)',B='var(--acc2)',S='var(--sand)';
+// hero world
+const tiles=[[280,230,150,150,0,'var(--line)'],[280,200,150,150,0,'var(--bg2)']];
+let h=`<polygon points="280,300 470,205 280,110 90,205" fill="var(--bg2)" stroke="var(--line)" stroke-width="2"/><polygon points="90,205 280,300 280,330 90,235" fill="var(--line)"/><polygon points="470,205 280,300 280,330 470,235" fill="var(--line)" opacity=".7"/>`;
+h+=`<g>${box(210,210,60,60,70,A)}</g><g>${box(330,230,60,60,40,B)}</g><g>${box(300,175,50,50,95,S)}</g>`;
+h+=`<g class="float">${box(255,150,52,52,52,A)}</g>`;
+h+=`<g class="float" style="animation-delay:-3s">${box(395,215,40,40,28,B)}</g>`;
+h+=`<circle cx="280" cy="42" r="9" fill="var(--acc2)" class="float"/><path d="M280 56v28" stroke="var(--acc2)" stroke-width="2" stroke-dasharray="3 4"/>`;
+document.getElementById('world').innerHTML=h;
+// parcels
+const data=[
+['Retail District','A row of commercial units with ground-floor storefronts.','Sample',B,[[110,80,44,44,46,B],[160,92,44,44,28,A]]],
+['Residential District','Multi-storey housing under renovation.','Sample',A,[[110,86,52,52,60,A],[170,100,40,40,36,S]]],
+['Data District','A small data center on industrial land.','Sample',S,[[100,90,60,60,34,S],[168,98,36,36,56,B]]]];
+document.getElementById('parcels').innerHTML=data.map(d=>{
+let s=`<svg viewBox="0 0 280 150" aria-hidden="true"><polygon points="140,138 250,84 140,30 30,84" fill="var(--card)" stroke="var(--line)" stroke-width="2"/>`;
+d[4].forEach(b=>{s+=box(b[0]+30,b[1]+26,b[2],b[3],b[4],b[5])});s+='</svg>';
+return `<article class="parcel">${s}<div><span class="tag">${d[2]}</span><h3>${d[0]}</h3><p>${d[1]}</p></div></article>`}).join('');
+const toast=document.createElement('div');toast.className='toast';toast.setAttribute('role','status');document.body.appendChild(toast);let tt;
+function pop(m){toast.textContent=m;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>toast.classList.remove('on'),1500)}
+document.querySelectorAll('.copyca').forEach(b=>b.addEventListener('click',async()=>{const v=b.dataset.ca;let ok=false;
+try{await navigator.clipboard.writeText(v);ok=true}catch(e){try{const t=document.createElement('textarea');t.value=v;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();ok=document.execCommand('copy');t.remove()}catch(e2){}}
+pop(ok?'Copied':'Copy failed')}));
+</script>
+</body>
+</html>
