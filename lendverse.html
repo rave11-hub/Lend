@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lendverse | Claim your verse</title>
+<meta name="description" content="Lendverse world map: every person can own and shape a verse.">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F2FF;--bg2:#E8E4FF;--ink:#17153B;--mute:#5B5880;--line:#CFC9F5;--acc:#6A4BFF;--acc2:#0FA37F;--card:#fff;--ocean:#CFE0FF;--land:#EFE6C8;--landb:#D8CBA0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D0E2B;--bg2:#15174A;--ink:#EEEBFF;--mute:#A6A3D1;--line:#2B2D6B;--acc:#8B73FF;--acc2:#5CF2C0;--card:#171950;--ocean:#10143F;--land:#2A2F72;--landb:#3B4195}}
+:root[data-theme="dark"]{--bg:#0D0E2B;--bg2:#15174A;--ink:#EEEBFF;--mute:#A6A3D1;--line:#2B2D6B;--acc:#8B73FF;--acc2:#5CF2C0;--card:#171950;--ocean:#10143F;--land:#2A2F72;--landb:#3B4195}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Manrope,system-ui,sans-serif}
+h1,h2,h3{font-family:Unbounded,system-ui,sans-serif;margin:0;line-height:1.15}
+.w{max-width:1200px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 0}
+.logo{font:700 20px Unbounded,sans-serif;text-decoration:none;color:inherit}
+.logo:focus-visible{outline:3px solid var(--acc2);outline-offset:3px;border-radius:6px}.logo i{font-style:normal;color:var(--acc)}
+.wbtn{background:var(--acc);color:#fff;border:0;border-radius:999px;padding:10px 18px;font:700 14px Manrope,system-ui,sans-serif;cursor:pointer}
+.wbtn:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+.btn:disabled{opacity:.6;cursor:wait}
+.me{font-size:14px;color:var(--mute)}.me b{color:var(--ink)}
+.intro{padding:6px 0 18px}.intro h1{font-size:clamp(26px,4vw,42px);max-width:20ch}
+.intro p{color:var(--mute);max-width:56ch;margin:12px 0 0}
+.main{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start;padding-bottom:30px}
+.map{background:var(--ocean);border:1.5px solid var(--line);border-radius:22px;padding:14px;overflow-x:auto}
+#grid{display:grid;grid-template-columns:repeat(36,minmax(20px,1fr));gap:2px;min-width:760px}
+.t{aspect-ratio:1;border:0;padding:0;border-radius:4px;background:transparent;position:relative;cursor:default}
+.t.land{background:var(--land);cursor:pointer;box-shadow:inset 0 0 0 1px var(--landb)}
+.t.land:hover{box-shadow:inset 0 0 0 2px var(--acc)}
+.t:focus-visible{outline:3px solid var(--acc2);outline-offset:1px;z-index:2}
+.t.sel{box-shadow:inset 0 0 0 3px var(--ink)!important;z-index:1}
+.t .b{position:absolute;left:50%;bottom:18%;transform:translateX(-50%);background:var(--c);border-radius:2px}
+.t .b.tower{width:34%;height:64%}.t .b.villa{width:62%;height:38%}.t .b.park{width:56%;height:56%;border-radius:50%;bottom:22%}.t .b.market{width:56%;height:46%;box-shadow:0 -4px 0 -1px var(--c)}
+.t.mine::after{content:"";position:absolute;inset:-2px;border-radius:6px;border:2px solid var(--acc2)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--mute)}
+.legend span:before{content:"";display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px;background:var(--k);box-shadow:inset 0 0 0 1px var(--landb)}
+aside{background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:22px;position:sticky;top:12px}
+aside h2{font-size:18px}aside p{color:var(--mute);font-size:14.5px;margin:8px 0 14px}
+label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}
+input[type=text]{width:100%;padding:11px 13px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+input:focus-visible{outline:3px solid var(--acc2);outline-offset:1px}
+.sw,.ty{display:flex;gap:8px;flex-wrap:wrap}
+.sw button{width:32px;height:32px;border-radius:50%;border:2px solid transparent;background:var(--c);cursor:pointer}
+.sw button[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 2px var(--card) inset}
+.ty button{padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:var(--ink);font:600 13px Manrope;cursor:pointer}
+.ty button[aria-pressed=true]{background:var(--acc);border-color:var(--acc);color:#fff}
+button:focus-visible{outline:3px solid var(--acc2);outline-offset:2px}
+.btn{display:block;width:100%;margin-top:18px;background:var(--acc);color:#fff;border:0;border-radius:999px;padding:13px;font:700 15px Manrope;cursor:pointer}
+.btn.alt{background:transparent;color:var(--ink);border:1.5px solid var(--line);margin-top:10px}
+.meta{font-size:13px;color:var(--mute);margin-top:12px}
+footer{padding:10px 0 44px;color:var(--mute);font-size:13px}
+@media (max-width:900px){.main{grid-template-columns:1fr}aside{position:static}}
+</style>
+</head>
+<body>
+<div class="w">
+<header><a class="logo" href="index.html" aria-label="Lendverse home">Lend<i>verse</i></a><button class="wbtn" id="wbtn" type="button">Connect wallet</button></header>
+<div class="intro"><h1>Every person gets a verse of their own.</h1><p>Pick a free plot on the world map, name your verse, choose how it looks, and make it yours. Other residents already live around you.</p></div>
+<div class="main">
+<div><div class="map"><div id="grid" role="grid" aria-label="World map of verses"></div></div>
+<div class="legend"><span style="--k:var(--land)">Free plot</span><span style="--k:var(--acc)">Resident verse</span><span style="--k:var(--acc2)">Your verse</span></div></div>
+<aside id="panel"></aside>
+</div>
+<footer>Claiming a plot costs 5 USDG. Verses are saved in the shared world when available, otherwise only in this browser. Sample residents are illustrative.</footer>
+</div>
+<script>
+const C=36,R=18,COLORS=['#6A4BFF','#0FA37F','#E0803A','#E0457B','#2E9BE0'],TYPES=['tower','villa','park','market'];
+const blobs=[[7,6,6,3.6],[10,12.5,3,3.4],[19,5,3,2.2],[19.5,10.5,3,4.2],[27,6,6.5,3.6],[31,13,3.4,2.2],[4,14,2,1.5]];
+const h=(x,y,s)=>{let n=Math.sin(x*127.1+y*311.7+s*74.7)*43758.5453;return n-Math.floor(n)};
+const land=(x,y)=>blobs.some(([cx,cy,rx,ry])=>((x-cx)/rx)**2+((y-cy)/ry)**2<1-h(x,y,1)*.35);
+const NAMES=['Aya','Noor','Kai','Mira','Sol','Eko','Lina','Tomo','Zed','Nia','Raf','Uma'];
+const state={sel:null,mine:null,draft:{name:'',color:COLORS[0],type:'tower'}};
+let db=null,uid=null,live={},note='',shared=false,wallet=null,paying=false;
+const PAY={chainId:4663,chainName:'Robinhood Chain',rpc:'https://rpc.mainnet.chain.robinhood.com',explorer:'https://explorer.chain.robinhood.com',token:'0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168',to:'0x7176BA4d4179256841d063f309f38AaB67275f58',amount:5,decimals:6,symbol:'USDG'};
+async function connect(){const eth=window.ethereum;if(!eth){note='No wallet found. Install MetaMask or open this page in your wallet browser.';return}
+try{const a=await eth.request({method:'eth_requestAccounts'});wallet=a[0]||null;note=''}catch(e){note=e&&e.code==4001?'Connection cancelled.':'Could not connect wallet.'}}
+async function pay(){const eth=window.ethereum;const cid=await eth.request({method:'eth_chainId'});
+if(parseInt(cid,16)!==PAY.chainId){const hx='0x'+PAY.chainId.toString(16);
+try{await eth.request({method:'wallet_switchEthereumChain',params:[{chainId:hx}]})}catch(e){if(e&&e.code===4001)throw e;
+await eth.request({method:'wallet_addEthereumChain',params:[{chainId:hx,chainName:PAY.chainName,nativeCurrency:{name:'Ether',symbol:'ETH',decimals:18},rpcUrls:[PAY.rpc],blockExplorerUrls:[PAY.explorer]}]})}}
+const amt=(BigInt(PAY.amount)*10n**BigInt(PAY.decimals)).toString(16).padStart(64,'0');
+const data='0xa9059cbb'+PAY.to.slice(2).toLowerCase().padStart(64,'0')+amt;
+const hash=await eth.request({method:'eth_sendTransaction',params:[{from:wallet,to:PAY.token,data}]});
+note='Payment sent. Waiting for confirmation...';draw();
+for(let i=0;i<90;i++){const rc=await eth.request({method:'eth_getTransactionReceipt',params:[hash]});if(rc){if(rc.status==='0x1')return hash;throw new Error('The payment transaction failed.')}await new Promise(z=>setTimeout(z,2000))}
+throw new Error('Confirmation timed out. Check transaction '+hash)}
+const res={};
+for(let y=0;y<R;y++)for(let x=0;x<C;x++)if(land(x,y)&&h(x,y,2)<.16){res[x+','+y]={name:NAMES[Math.floor(h(x,y,3)*NAMES.length)]+"'s verse",color:COLORS[Math.floor(h(x,y,4)*5)],type:TYPES[Math.floor(h(x,y,5)*4)]}}
+try{const s=localStorage.getItem('lendverse.mine');if(s){const m=JSON.parse(s);if(m&&typeof m.x=='number')state.mine=m}}catch(e){}
+async function save(){if(shared){try{if(state.mine)await db.doc('verses/'+uid).set({x:state.mine.x,y:state.mine.y,name:state.mine.name,color:state.mine.color,type:state.mine.type,t:state.mine.t||Date.now(),tx:state.mine.tx||null,wallet:state.mine.wallet||null});else await db.doc('verses/'+uid).delete();note='';try{localStorage.setItem('lendverse.mine',JSON.stringify(state.mine))}catch(e2){}}catch(e){note=(e&&e.code=='invalid_argument'?'Your access level here is view-only, so changes cannot be saved. Ask the owner for Contributor access.':'Could not save. Try again in a moment.')+(state.mine&&state.mine.tx?' Your payment tx: '+state.mine.tx:'');}return}
+try{state.mine?localStorage.setItem('lendverse.mine',JSON.stringify(state.mine)):localStorage.removeItem('lendverse.mine')}catch(e){}}
+const key=(x,y)=>x+','+y,owner=(x,y)=>state.mine&&state.mine.x==x&&state.mine.y==y?state.mine:(live[key(x,y)]||res[key(x,y)]);
+function draw(){const g=document.getElementById('grid');g.innerHTML='';
+for(let y=0;y<R;y++)for(let x=0;x<C;x++){const b=document.createElement('button');b.className='t';
+if(land(x,y)){b.classList.add('land');const o=owner(x,y);b.setAttribute('aria-label',(o?o.name:'Free plot')+' at '+x+', '+y);
+if(o){const i=document.createElement('i');i.className='b '+o.type;i.style.setProperty('--c',o===state.mine?'var(--acc2)':o.color);b.appendChild(i);if(o===state.mine)b.classList.add('mine')}
+if(state.sel&&state.sel.x==x&&state.sel.y==y)b.classList.add('sel');
+b.onclick=()=>{state.sel={x,y};const o=owner(x,y);if(o===state.mine)state.draft={name:o.name,color:o.color,type:o.type};else if(!state.draft.name&&state.mine)state.draft={name:state.mine.name,color:state.mine.color,type:state.mine.type};draw()}}else{b.tabIndex=-1;b.setAttribute('aria-hidden','true')}
+g.appendChild(b)}
+panel();const wb=document.getElementById('wbtn');wb.textContent=wallet?wallet.slice(0,6)+'...'+wallet.slice(-4):'Connect wallet'}
+function el(t,p,...k){const e=document.createElement(t);Object.assign(e,p||{});k.forEach(c=>e.append(c));return e}
+function panel(){const P=document.getElementById('panel');P.innerHTML='';const s=state.sel;
+if(!s){P.append(el('h2',{textContent:'Pick a plot'}),el('p',{textContent:'Select any land tile on the map to see who lives there or to claim it.'}));return}
+const o=owner(s.x,s.y),mine=o===state.mine;
+if(o&&!mine){P.append(el('h2',{textContent:o.name}),el('p',{textContent:(o.live?'A resident verse':'A sample verse')+' at '+s.x+', '+s.y+'. Its style is a '+o.type+'.'}),el('p',{className:'meta',textContent:o.live?'Pick a free plot to build your own.':'Sample resident. Pick a free plot to build your own.'}));return}
+P.append(el('h2',{textContent:mine?'Edit your verse':(state.mine?'Move your verse here':'Claim this plot')}),el('p',{textContent:'Plot at '+s.x+', '+s.y+'. One verse per person.'}));
+const d=state.draft;
+const inp=el('input',{type:'text',id:'nm',maxLength:24,placeholder:'Name your verse',value:d.name});inp.oninput=()=>{d.name=inp.value};
+P.append(el('label',{htmlFor:'nm',textContent:'Name'}),inp);
+const sw=el('div',{className:'sw'});COLORS.forEach(c=>{const b=el('button',{type:'button',ariaLabel:'Color '+c});b.style.setProperty('--c',c);b.setAttribute('aria-pressed',d.color==c);b.onclick=()=>{d.color=c;panel()};sw.append(b)});
+P.append(el('label',{textContent:'Color'}),sw);
+const ty=el('div',{className:'ty'});TYPES.forEach(t=>{const b=el('button',{type:'button',textContent:t[0].toUpperCase()+t.slice(1)});b.setAttribute('aria-pressed',d.type==t);b.onclick=()=>{d.type=t;panel()};ty.append(b)});
+P.append(el('label',{textContent:'Style'}),ty);
+const isNew=!state.mine;if(isNew)P.append(el('p',{className:'meta',textContent:'Claiming costs '+PAY.amount+' '+PAY.symbol+' (one-time), paid on '+PAY.chainName+'. Editing or moving your verse later is free.'}));
+const label=mine?'Save changes':(state.mine?'Move my verse here':(wallet?'Claim for '+PAY.amount+' '+PAY.symbol:'Connect wallet to claim'));
+const go=el('button',{className:'btn',type:'button',textContent:paying?'Processing...':label,disabled:paying});
+go.onclick=async()=>{const prev=state.mine;let tx=prev&&prev.tx,w=prev&&prev.wallet;
+if(isNew){if(!wallet){await connect();draw();return}
+paying=true;note='Confirm the payment in your wallet...';draw();
+try{tx=await pay();w=wallet}catch(e){paying=false;note=e&&e.code==4001?'Payment cancelled.':String((e&&e.message)||'Payment failed.').slice(0,140);draw();return}
+paying=false;note=''}
+state.mine={x:s.x,y:s.y,name:(d.name.trim()||'My verse').slice(0,24),color:d.color,type:d.type,t:prev&&prev.t||Date.now(),live:true,tx,wallet:w};draw();await save();draw()};
+P.append(go);if(note)P.append(el('p',{className:'meta',role:'alert',textContent:note}));
+if(mine){const r=el('button',{className:'btn alt',type:'button',textContent:'Release this plot'});r.onclick=async()=>{state.mine=null;state.draft={name:'',color:COLORS[0],type:'tower'};draw();await save();draw()};P.append(r)}}
+document.getElementById('wbtn').onclick=async()=>{await connect();draw()};
+if(window.ethereum&&window.ethereum.on)window.ethereum.on('accountsChanged',a=>{wallet=a&&a[0]||null;draw()});
+(async()=>{try{if(window.ethereum){const a=await window.ethereum.request({method:'eth_accounts'});wallet=a&&a[0]||null}}catch(e){}draw()})();
+draw();
+(async()=>{try{if(!window.claude)return;const u=await claude.use('user');db=await claude.use('db');if(!db||!u||!u.id)return;uid=await u.id();if(!uid)return;shared=true;
+state.mine=null;
+db.collection('verses').onSnapshot(snap=>{const L={};const rows=snap.docs.map(d=>({id:d.id,v:d.data()})).filter(r=>r.v&&typeof r.v.x=='number'&&typeof r.v.y=='number'&&land(r.v.x,r.v.y)&&!res[key(r.v.x,r.v.y)]).sort((a,b)=>(a.v.t||0)-(b.v.t||0)||(a.id<b.id?-1:1));
+let mine=null;rows.forEach(r=>{const k=key(r.v.x,r.v.y);if(L[k])return;const o={x:r.v.x,y:r.v.y,name:String(r.v.name||'Verse').slice(0,24),color:COLORS.includes(r.v.color)?r.v.color:COLORS[0],type:TYPES.includes(r.v.type)?r.v.type:'tower',t:r.v.t,tx:r.v.tx||null,wallet:r.v.wallet||null,live:true};if(r.id===uid)mine=o;else L[k]=o});
+live=L;state.mine=mine;if(mine&&!state.sel)state.draft={name:mine.name,color:mine.color,type:mine.type};draw()},e=>{shared=false;note='';draw()});
+}catch(e){}})();
+</script>
+</body>
+</html>
